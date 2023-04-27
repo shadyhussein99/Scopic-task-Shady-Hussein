@@ -47,27 +47,31 @@ function Questions() {
         selectedAnswer && setValidationMsg(false)
     }
 
-    return <main>
+    return <main className="mt-20 mx-6 md:mx-16 lg:mx-20 lg:w-3/4 xl:w-3/5">
 
-        <h1 className="text-red">{questions}</h1>
-        <h3>Available Answers:</h3>
+        <h1 className="text-2xl font-bold lg:text-3xl">Q. {questions}</h1>
+        <h3 className="mt-7 text-lime-600 text-lg font-semibold">Available Answers:</h3>
 
-        <p>( {AllAnswers.map((value: any, index: number) => {
+        <p className="mt-2 text-lg font-semibold">( {AllAnswers.map((value: any, index: number) => {
             return <span key={index}>{value}, </span>
         })})</p>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label>Type your answer here: </label>
-            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: (e) => setSelectedAnswer(e.target.value) })} />
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
+            <label className="text-lg font-semibold">Type your answer here: </label>
+            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: (e) => {setSelectedAnswer(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))} })} className="mx-3 px-2 py-1 border-2 rounded-lg md:w-96" />  {/* This logic in (setSelectedAnswer) to make sure that the first letter in the user's input is capitalized */}
+            
             {(errors.answer || validationMsg) && (
                 <p className="text-red-500 w-96 md: ml-5">{(errors.answer as FieldError)?.message || "*Submit your answer first"}</p>)}
-            <button type="submit">SUBMIT</button>
+           
+            {correctMsg && <p className="mt-4 bg-green-100 text-green-800 px-2 py-2 border border-green-800 rounded-lg">Your answer is correct</p>}
+            {falseMsg && <p className="mt-4 bg-red-100 text-red-900 px-2 py-2 border border-red-900 rounded-lg">Your answer is false, the correct answer is {correctAnswer}</p>}
+            
+            <button type="submit" className="block mt-8 border py-2 px-6 rounded-xl font-semibold text-white bg-lime-600 hover:text-lime-600 hover:bg-white hover:border-lime-600 transition ease-in-out duration-300">SUBMIT</button>
         </form>
 
-        {correctMsg && <p>Your answer is correct</p>}
-        {falseMsg && <p>Your answer is false, the correct answer is {correctAnswer}</p>}
 
-        <button onClick={() => correctMsg || falseMsg ? setLoadingNewQuestion(!loadingNewQuestion) : setValidationMsg(true)}>NEXT QUESTION</button>
+
+        <button onClick={() => correctMsg || falseMsg ? setLoadingNewQuestion(!loadingNewQuestion) : setValidationMsg(true)} className="block mt-6 mb-3 border border-lime-600 py-2 px-6 rounded-xl font-semibold text-lime-600 bg-white hover:text-white hover:bg-lime-600 hover:border-white transition ease-in-out duration-300">NEXT QUESTION</button>
 
     </main>
 }
