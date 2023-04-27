@@ -48,7 +48,8 @@ function Questions() {
     }
 
     return <main>
-        <h1>{questions}</h1>
+
+        <h1 className="text-red">{questions}</h1>
         <h3>Available Answers:</h3>
 
         <p>( {AllAnswers.map((value: any, index: number) => {
@@ -57,11 +58,10 @@ function Questions() {
 
         <form onSubmit={handleSubmit(onSubmit)}>
             <label>Type your answer here: </label>
-            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: (e) => setSelectedAnswer(e.target.value)})} />
+            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: (e) => setSelectedAnswer(e.target.value) })} />
             {(errors.answer || validationMsg) && (
                 <p className="text-red-500 w-96 md: ml-5">{(errors.answer as FieldError)?.message || "*Submit your answer first"}</p>)}
             <button type="submit">SUBMIT</button>
-
         </form>
 
         {correctMsg && <p>Your answer is correct</p>}
