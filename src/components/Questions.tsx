@@ -55,7 +55,7 @@ function Questions() {
          (setFalseMsg(true), setCorrectMsg(false), setValidationMsg(false))
     }
 
-    return <main className="mt-20 mx-6 md:mx-16 lg:mx-20 lg:w-3/4 xl:w-3/5">
+    return questions ? (<main className="mt-20 mx-6 md:mx-16 lg:mx-20 lg:w-3/4 xl:w-3/5">
 
         <h1 className="text-2xl font-bold lg:text-3xl">Q. {questions}</h1>
         <h3 className="mt-7 text-lime-600 text-lg font-semibold">Available Answers:</h3>
@@ -79,7 +79,8 @@ function Questions() {
 
         <button onClick={clickingNewQuestionButton} className="block mt-6 mb-3 border border-lime-600 py-2 px-6 rounded-xl font-semibold text-lime-600 bg-white hover:text-white hover:bg-lime-600 hover:border-white transition ease-in-out duration-300">NEXT QUESTION</button>
 
-    </main>
+    </main>) : 
+    <p className="mt-16 mx-20 text-xl">Loading ...</p>
 }
 
 export default Questions
