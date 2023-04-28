@@ -51,8 +51,8 @@ function Questions() {
     })
 
     const onSubmit = () => {       // Handles form submission
-        selectedAnswer == correctAnswer ? (setCorrectMsg(true), setFalseMsg(false)) : (setFalseMsg(true), setCorrectMsg(false))
-        selectedAnswer && setValidationMsg(false)
+        selectedAnswer == correctAnswer ? (setCorrectMsg(true), setFalseMsg(false), setValidationMsg(false)) :
+         (setFalseMsg(true), setCorrectMsg(false), setValidationMsg(false))
     }
 
     return <main className="mt-20 mx-6 md:mx-16 lg:mx-20 lg:w-3/4 xl:w-3/5">
@@ -66,7 +66,7 @@ function Questions() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
             <label className="text-lg font-semibold">Type your answer here: </label>
-            <input value={selectedAnswer} placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: handleChange})} className="mx-3 px-2 py-1 border-2 rounded-lg md:w-96" />
+            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: handleChange})} className="mx-3 px-2 py-1 border-2 rounded-lg md:w-96" />
             
             {(errors.answer || validationMsg) && (
                 <p className="text-red-500 w-96 md: ml-5">{(errors.answer as FieldError)?.message || "*Submit your answer first"}</p>)}
@@ -76,8 +76,6 @@ function Questions() {
             
             <button type="submit" className="block mt-8 border py-2 px-6 rounded-xl font-semibold text-white bg-lime-600 hover:text-lime-600 hover:bg-white hover:border-lime-600 transition ease-in-out duration-300">SUBMIT</button>
         </form>
-
-
 
         <button onClick={clickingNewQuestionButton} className="block mt-6 mb-3 border border-lime-600 py-2 px-6 rounded-xl font-semibold text-lime-600 bg-white hover:text-white hover:bg-lime-600 hover:border-white transition ease-in-out duration-300">NEXT QUESTION</button>
 
