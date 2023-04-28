@@ -33,6 +33,14 @@ function Questions() {
             .catch(error => console.log(error))
     }, [loadingNewQuestion])
 
+    const handleChange = (e: any) => {          // Handles change in the input
+        setSelectedAnswer(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
+    }
+
+    const clickingNewQuestionButton = () => {    // Handles clicking on New Question button
+        correctMsg || falseMsg ? setLoadingNewQuestion(!loadingNewQuestion) : setValidationMsg(true)
+    }
+
 
     const schema = Yup.object().shape({
         answer: Yup.string().required("*Answer is required")
@@ -42,7 +50,7 @@ function Questions() {
         resolver: yupResolver(schema)      // For integration between react-hook-form and yup
     })
 
-    const onSubmit = () => {
+    const onSubmit = () => {       // Handles form submission
         selectedAnswer == correctAnswer ? (setCorrectMsg(true), setFalseMsg(false)) : (setFalseMsg(true), setCorrectMsg(false))
         selectedAnswer && setValidationMsg(false)
     }
@@ -58,7 +66,7 @@ function Questions() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
             <label className="text-lg font-semibold">Type your answer here: </label>
-            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: (e) => {setSelectedAnswer(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))} })} className="mx-3 px-2 py-1 border-2 rounded-lg md:w-96" />  {/* This logic in (setSelectedAnswer) to make sure that the first letter in the user's input is capitalized */}
+            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: handleChange })} className="mx-3 px-2 py-1 border-2 rounded-lg md:w-96" />  {/* This logic in (setSelectedAnswer) to make sure that the first letter in the user's input is capitalized */}
             
             {(errors.answer || validationMsg) && (
                 <p className="text-red-500 w-96 md: ml-5">{(errors.answer as FieldError)?.message || "*Submit your answer first"}</p>)}
@@ -71,7 +79,7 @@ function Questions() {
 
 
 
-        <button onClick={() => correctMsg || falseMsg ? setLoadingNewQuestion(!loadingNewQuestion) : setValidationMsg(true)} className="block mt-6 mb-3 border border-lime-600 py-2 px-6 rounded-xl font-semibold text-lime-600 bg-white hover:text-white hover:bg-lime-600 hover:border-white transition ease-in-out duration-300">NEXT QUESTION</button>
+        <button onClick={clickingNewQuestionButton} className="block mt-6 mb-3 border border-lime-600 py-2 px-6 rounded-xl font-semibold text-lime-600 bg-white hover:text-white hover:bg-lime-600 hover:border-white transition ease-in-out duration-300">NEXT QUESTION</button>
 
     </main>
 }
