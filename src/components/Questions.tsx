@@ -33,7 +33,7 @@ function Questions() {
             .catch(error => console.log(error))
     }, [loadingNewQuestion])
 
-    const handleChange = (e: any) => {          // Handles change in the input
+    const handleChange = (e: any) => {          // Handles change in the input (This logic in (setSelectedAnswer) to make sure that the first letter in the user's input is capitalized)
         setSelectedAnswer(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
     }
 
@@ -66,7 +66,7 @@ function Questions() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
             <label className="text-lg font-semibold">Type your answer here: </label>
-            <input placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: handleChange })} className="mx-3 px-2 py-1 border-2 rounded-lg md:w-96" />  {/* This logic in (setSelectedAnswer) to make sure that the first letter in the user's input is capitalized */}
+            <input value={selectedAnswer} placeholder="Be sure of the spelling" type="text" {...register("answer", { onChange: handleChange})} className="mx-3 px-2 py-1 border-2 rounded-lg md:w-96" />
             
             {(errors.answer || validationMsg) && (
                 <p className="text-red-500 w-96 md: ml-5">{(errors.answer as FieldError)?.message || "*Submit your answer first"}</p>)}
